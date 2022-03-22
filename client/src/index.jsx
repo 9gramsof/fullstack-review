@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
+//import axios react
+// import Request from 'axios-react';
+const axios = require('axios');
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       repos: []
     }
 
@@ -15,7 +18,17 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
+
+    axios({
+      method: 'post',
+      url: '/repos',
+      data: {
+        name: `${term}`
+      }
+    })
+    .then((res) => {console.log(res)})
+    .catch((err) => {console.log(err)});
+
   }
 
   render () {
