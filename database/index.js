@@ -16,14 +16,9 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-//pseudocode
-  //check if name is already in DB
-  //if not,
-  //make a repo instance
-  //save repo into the DB
-let save = (repo) => {
 
-  //repo.findOne().updateOne()
+//save each repo
+let save = (repo) => {
 
   let id = repo.id;
   let name = repo.name;
@@ -31,30 +26,19 @@ let save = (repo) => {
   let owner = repo.owner.login;
   let most_recent = repo["updated_at"];
 
-  // console.log("these will be in the mongood DB", id, name, html_url, owner, most_recent);
+  //instantiate a new repo
+  let savedRepo = new Repo({
+    id: id,
+    name: name,
+    html_url: html_url,
+    owner: owner,
+    most_recent: most_recent
+  });
+  //save repo
+  savedRepo.save();
+};
 
-  // db.Repo.find({owner: owner}).
-  // let newRepo = new Repo({
-  //   id: id,
-  //   name: name,
-  //   html_url: html_url,
-  //   owner: owner,
-  //   most_recent: most_recent
-  // })
-  // if (!Repo.find({ name: `${name}` })) {
-  //   let name = new Repo({name});
-  //   name.save();
-  // }
-}
 
-// let repoExample = {
-//   id: 12345,
-//   name: "reponame",
-//   html_url: "https://github.com/user/repo",
-//   owner: {login: 'Minggui'},
-//   updated_at: "2021-10-13T19:33:11Z"
-// }
-
-// save(repoExample);
 
 module.exports.save = save;
+module.exports.Repo = Repo;
